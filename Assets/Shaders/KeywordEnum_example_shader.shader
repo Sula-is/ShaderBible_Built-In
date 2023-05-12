@@ -1,10 +1,10 @@
-Shader "USB/Toggle_example_shader"
+Shader "USB/KeywordEnum_example_shader"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Color ("Color", Color) = (1,1,1,1)
-        [Toggle] _Enable ("Enable?", Float) = 1
+        [KeywordEnum(Off,Red,Blue)]
+        _Options ("Color Options", Float) = 0
     }
     SubShader
     {
@@ -15,7 +15,7 @@ Shader "USB/Toggle_example_shader"
             #pragma vertex vert
             #pragma fragment frag
 
-            #pragma  shader_feature _ENABLE_ON
+            #pragma  multi_compile _OPTIONS_OFF _OPTIONS_RED _OPTIONS_BLUE
 
             #include "UnityCG.cginc"
 
@@ -33,7 +33,6 @@ Shader "USB/Toggle_example_shader"
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
-            float4 _Color;
 
             v2f vert(appdata v)
             {
@@ -46,10 +45,13 @@ Shader "USB/Toggle_example_shader"
             half4 frag(v2f i) : SV_Target
             {
                 half4 col = tex2D(_MainTex, i.uv);
-                #if _ENABLE_ON
-                return col * _Color;
-                #else
+                
+                #if _OPTIONS_OFF
                 return col;
+                #elif _OPTIONS_RED
+                return col * float4(1,0,0,1);
+                #elif _OPTIONS_BLUE
+                return col * float4(0,0,1,1);
                 #endif
             }
             ENDCG

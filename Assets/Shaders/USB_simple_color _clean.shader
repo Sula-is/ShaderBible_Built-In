@@ -1,21 +1,16 @@
-Shader "USB/Toggle_example_shader"
+Shader "USB/USB_simple_color_clean"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Color ("Color", Color) = (1,1,1,1)
-        [Toggle] _Enable ("Enable?", Float) = 1
     }
     SubShader
     {
-
         Pass
         {
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-
-            #pragma  shader_feature _ENABLE_ON
 
             #include "UnityCG.cginc"
 
@@ -33,9 +28,8 @@ Shader "USB/Toggle_example_shader"
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
-            float4 _Color;
 
-            v2f vert(appdata v)
+            v2f vert (appdata v)
             {
                 v2f o;
                 o.vertex = UnityObjectToClipPos(v.vertex);
@@ -43,14 +37,11 @@ Shader "USB/Toggle_example_shader"
                 return o;
             }
 
-            half4 frag(v2f i) : SV_Target
+            fixed4 frag (v2f i) : SV_Target
             {
-                half4 col = tex2D(_MainTex, i.uv);
-                #if _ENABLE_ON
-                return col * _Color;
-                #else
+                // sample the texture
+                fixed4 col = tex2D(_MainTex, i.uv);
                 return col;
-                #endif
             }
             ENDCG
         }

@@ -7,9 +7,10 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: USB_Toggle_example_shader
-  m_Shader: {fileID: 4800000, guid: 02532979f35e6454b800b9b461160567, type: 3}
-  m_ValidKeywords: []
+  m_Name: USB_KeywordEnum_example_shader
+  m_Shader: {fileID: 4800000, guid: 2e722314f7de5924a9b9af65d3b77ccb, type: 3}
+  m_ValidKeywords:
+  - _OPTIONS_BLUE
   m_InvalidKeywords: []
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
@@ -26,7 +27,6 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Enable: 0
-    m_Colors:
-    - _Color: {r: 0.8773585, g: 0.12829298, b: 0.12829298, a: 1}
+    - _Options: 2
+    m_Colors: []
   m_BuildTextureStacks: []

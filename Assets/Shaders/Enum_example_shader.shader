@@ -1,21 +1,20 @@
-Shader "USB/Toggle_example_shader"
+Shader "USB/Enum_example_shader"
 {
     Properties
     {
         _MainTex ("Texture", 2D) = "white" {}
-        _Color ("Color", Color) = (1,1,1,1)
-        [Toggle] _Enable ("Enable?", Float) = 1
+        [Enum(Off,0,Front,1,Back,2)]
+        _Face ("Face Culling", Float) = 0
     }
     SubShader
     {
+        Cull[_Face]
 
         Pass
         {
             CGPROGRAM
             #pragma vertex vert
             #pragma fragment frag
-
-            #pragma  shader_feature _ENABLE_ON
 
             #include "UnityCG.cginc"
 
@@ -33,7 +32,6 @@ Shader "USB/Toggle_example_shader"
 
             sampler2D _MainTex;
             float4 _MainTex_ST;
-            float4 _Color;
 
             v2f vert(appdata v)
             {
@@ -46,11 +44,7 @@ Shader "USB/Toggle_example_shader"
             half4 frag(v2f i) : SV_Target
             {
                 half4 col = tex2D(_MainTex, i.uv);
-                #if _ENABLE_ON
-                return col * _Color;
-                #else
                 return col;
-                #endif
             }
             ENDCG
         }
